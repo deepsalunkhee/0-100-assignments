@@ -9,6 +9,7 @@
 function getLength(str) {
   console.log("Original String:", str);
   console.log("Length:", str.length);
+  console.log("testing")
 }
 getLength("Hello World");
 
