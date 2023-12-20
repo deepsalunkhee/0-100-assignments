@@ -6,17 +6,37 @@
 
 function wait1(t) {
 
+    const promise=new Promise((resolve)=>{
+        setTimeout(resolve(),t*1000)
+    })
+    return promise;
+
 }
 
 function wait2(t) {
-
+    const promise=new Promise((resolve)=>{
+        setTimeout(resolve,t*1000)
+    })
+    return promise;
 }
 
 function wait3(t) {
-
+    const promise=new Promise((resolve)=>{
+        setTimeout(resolve,t*1000)
+    })
+    return promise;
 }
 
 function calculateTime(t1, t2, t3) {
+   
+    const p1=wait1(t1);
+    const p2=wait2(t2);
+    const p3=wait3(t3);
+    const start = Date.now()
+    return Promise.all([p1,p2,p3]).then(()=>{
+        const end= Date.now();
+        return end-start;
+    })
 
 }
 

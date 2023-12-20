@@ -7,9 +7,7 @@
 function wait(n) {
 
     const promise=new Promise((resolve)=>{
-        setTimeout(()=>{
-         resolve()
-        },1000*n)
+        setTimeout(resolve,1000*n)
     })
 
     return promise;
