@@ -12,9 +12,27 @@ const app = express();
 // clears every one second
 
 let numberOfRequestsForUser = {};
+
+const ratelimiter =(req,res,next)=>{
+   let user_id=req.headers["user-id"]
+   const currenttime=Date.now();
+   if (!numberOfRequestsForUser[user_id]) {
+    numberOfRequestsForUser[user_id] = [];
+  }
+   numberOfRequestsForUser[user_id].push(currenttime);
+   numberOfRequestsForUser[user_id]=numberOfRequestsForUser[user_id].filter((times)=>times>currenttime-1000)
+   if(numberOfRequestsForUser[user_id].length>5){
+    return res.status(404).json({ error: 'Rate limit exceeded for this user' });
+   }
+   next();
+}
+
+//this clears the number of reques after 1s
 setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
+
+app.use(ratelimiter);
 
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
@@ -23,5 +41,9 @@ app.get('/user', function(req, res) {
 app.post('/user', function(req, res) {
   res.status(200).json({ msg: 'created dummy user' });
 });
+
+// app.listen(3000,()=>{
+//   console.log("started")
+// });
 
 module.exports = app;
