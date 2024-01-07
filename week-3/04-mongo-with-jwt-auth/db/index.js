@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://Deep:Deep123@cluster0.nowues7.mongodb.net/0_100?retryWrites=true&w=majority"
+  ""
 );
 
 // Define schemas
