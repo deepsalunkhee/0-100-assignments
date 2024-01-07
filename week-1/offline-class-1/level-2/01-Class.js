@@ -9,4 +9,9 @@ class Animal {
   }
 }
 
+const b=new Animal('cat',4);
+console.log(b.describe())
+
+
+
 

@@ -13,7 +13,7 @@ function getLength(str) {
 
 
 
-  
+
 }
 getLength("Hello World");
 
@@ -79,3 +79,4 @@ function toLower(str) {
   console.log("After toLowerCase:", str.toLowerCase());
 }
 toLower("Hello World");
+

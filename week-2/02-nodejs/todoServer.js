@@ -39,11 +39,66 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+app.use(bodyParser.json());
+
+let todos = [];
+
+//getting all the todos
+app.get("/todos", (req, res) => {
+  res.status(200).json(todos);
+});
+
+//creating a new todo
+app.post("/todos", (req, res) => {
+  const newtodo = {
+    id: new Date().getTime(),
+    title: req.body.title,
+    description: req.body.description,
+  };
+  todos.push(newtodo);
+  res.status(201).json(todos);
+});
+
+//retrive a task with this id
+app.get("/todos/:id", (req, res) => {
+  const reqtodod = todos.find((x) => x.id === parseInt(req.params.id));
+  if (reqtodod) {
+    res.status(200).json(reqtodod);
+  } else {
+    res.status(404).send("Not Found");
+  }
+});
+
+//updatign a existing todo
+app.put("/todos/:id", (req, res) => {
+  const reqtodo = todos.findIndex((x) => x.id === parseInt(req.params.id));
+  if (reqtodo === -1) {
+    res.status(404).send("Not Found");
+  }else{
+   
+    todos[reqtodo].title=req.body.title;
+    todos[reqtodo].description=req.body.description;
+    res.status(200).json(todos)
+  }
+});
+
+//deleting a todo
+app.delete("/todos/:id",(req,res)=>{
+  const reqtodo=todos.findIndex(x=>x.id===parseInt(req.params.id));
+  if(reqtodo===-1){
+    res.status(404).send("Not Found");
+  }else{
+    todos.splice(reqtodo,1)
+    res.status(200).json(todos)
+  }
+})
+
+
+
+module.exports = app;
