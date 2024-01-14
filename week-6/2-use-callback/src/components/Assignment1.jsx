@@ -7,11 +7,13 @@ export function Assignment1() {
 
     // Your code starts here
     function handleIncrement() {
-
+        //normal way
+        //setCount(count+1);
     }
 
     function handleDecrement() {
-        
+        //normal way
+        //setCount(count-1); 
     }
     // Your code ends here
 
